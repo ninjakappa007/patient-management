@@ -1,6 +1,7 @@
 package com.pm.patientservice.service;
 import com.pm.patientservice.dto.PatientRequestDTO;
 import com.pm.patientservice.dto.PatientResponseDTO;
+import com.pm.patientservice.exception.EmailAlreadyExistsException;
 import com.pm.patientservice.mapper.PatientMapper;
 import com.pm.patientservice.model.Patient;
 import com.pm.patientservice.repository.PatientRepository;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Service
 public class PatientService {
-    private PatientRepository patientRepository;
+    private final PatientRepository patientRepository;
 
     @Autowired
     PatientService(PatientRepository patientRepository){
@@ -29,6 +30,11 @@ public class PatientService {
 
 //    get patient dto then convert it to patient obj then return dto
     public PatientResponseDTO cretePatient(PatientRequestDTO patientRequestDTO){
+//      Checking if email already exists in database
+        if (patientRepository.existsByEmail(patientRequestDTO.getEmail())){
+            throw new EmailAlreadyExistsException("A patient with this email already exists" + patientRequestDTO.getEmail());
+        }
+
         Patient newPatient = patientRepository.save(PatientMapper.convertDTOToObj(patientRequestDTO));
         return PatientMapper.convertToDTO(newPatient);
     }
