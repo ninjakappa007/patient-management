@@ -28,4 +28,13 @@ public class GlobalExceptionHandler {
         errors.put("message", "Email address already exists");
         return ResponseEntity.badRequest().body(errors);
     }
+
+    @ExceptionHandler(PatientNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handlePatientNotFoundException(PatientNotFoundException ex){
+        log.warn("User is not found with provided uuid {}",ex.getMessage());
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", "User is not found with provided uuid");
+        return ResponseEntity.badRequest().body(errors);
+    }
+
 }

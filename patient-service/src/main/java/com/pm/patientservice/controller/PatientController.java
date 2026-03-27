@@ -3,13 +3,15 @@ package com.pm.patientservice.controller;
 import com.pm.patientservice.dto.PatientRequestDTO;
 import com.pm.patientservice.dto.PatientResponseDTO;
 import com.pm.patientservice.service.PatientService;
-import jakarta.validation.Valid;
+import com.pm.patientservice.validators.CreatePatientValidationGroup;
+import jakarta.validation.groups.Default;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/patients") // Base url is /patients
@@ -29,8 +31,20 @@ public class PatientController {
 
     // @Valid annotation trigger automatic validation of @RequestBody based on the constraints (e.g., @NotNull, @Size, @Email)
     @PostMapping
-    public ResponseEntity<PatientResponseDTO> createPatient(@Valid @RequestBody PatientRequestDTO patientRequestDTO){
+    public ResponseEntity<PatientResponseDTO> createPatient(@Validated({Default.class, CreatePatientValidationGroup.class}) @RequestBody PatientRequestDTO patientRequestDTO){
         PatientResponseDTO createdPatient = patientService.cretePatient(patientRequestDTO);
         return ResponseEntity.ok().body(createdPatient);
+    }
+
+    @PutMapping("/{id}") // here id is path param
+    public ResponseEntity<PatientResponseDTO> updatePatient(@PathVariable UUID id, @Validated({Default.class}) @RequestBody PatientRequestDTO patientRequestDTO){
+        PatientResponseDTO updatedPatient = patientService.updatePatient(id, patientRequestDTO);
+        return ResponseEntity.ok().body(updatedPatient);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePatient(@PathVariable UUID id){
+        patientService.deletePatient(id);
+        return ResponseEntity.noContent().build();
     }
 }
