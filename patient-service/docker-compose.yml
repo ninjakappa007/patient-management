@@ -1,0 +1,36 @@
+services:
+  patient-service:
+    build: .
+    ports:
+      - "4000:4000"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/patient-service-db
+      SPRING_DATASOURCE_USERNAME: nayaashb
+      SPRING_DATASOURCE_PASSWORD: Ashu@9348
+    depends_on:
+      - db
+
+# No need caching now so commented out
+#  redis:
+#    image: redis:7-alpine
+#    container_name: redis
+#    ports:
+#      - "6379:6379"
+
+# Source db with volume and network
+  db:
+    image: postgres:16-alpine
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: nayaashb
+      POSTGRES_PASSWORD: Ashu@9348
+      POSTGRES_DB: patient-service-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
