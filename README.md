@@ -27,3 +27,8 @@ docker compose up --build    # build and start together
 
 ## Notification Service
 ![Example Image](/notification-service.png)
+
+
+Self Notes :
+1. use ElasticMQ for replacement of SQS in local env using docker compose
+2. 
