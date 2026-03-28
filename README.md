@@ -10,19 +10,20 @@ A microservices-based backend system for managing patient records, built with Sp
 - **PostgreSQL Database** — Database for development
 - **Hibernate** — DDL management and query execution
 - **Maven** — Build and dependency management
-
+- **Synchronous Communication** — GRPC
+- **Asynchronous Communication** — Kafka
+- **Queue Service** — SQS/Redis
 
 ## Getting Started
-To start dev db just install docker or podman and use docker compose file it has all external resources config
-patient service starts on `4000`
-postgres starts on `5432`
-redis starts on `6379`
 
+To start development use docker or podman and use docker-compose file.
 
-
-docker compose down        # stop containers
+```bash
+docker compose down          # stop containers
 docker build -t patient-service .  # rebuild image
-docker compose up          # start again
-docker compose up --build     # build and start together
+docker compose up            # start again
+docker compose up --build    # build and start together
+```
 
-2:49 pending
+## Notification Service
+![Example Image](/notification-service.png)
