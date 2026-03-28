@@ -1,21 +1,23 @@
 services:
   patient-service:
-    build: .
+    build: ./patient-service
     ports:
       - "4000:4000"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/patient-service-db
       SPRING_DATASOURCE_USERNAME: nayaashb
       SPRING_DATASOURCE_PASSWORD: Ashu@9348
+      BILLING_SERVICE_ADDRESS: billing-service
+      BILLING_SERVICE_PORT: 9001
     depends_on:
       - db
+      - billing-service
 
-# No need caching now so commented out
-#  redis:
-#    image: redis:7-alpine
-#    container_name: redis
-#    ports:
-#      - "6379:6379"
+  billing-service:
+    build: ./billing-service
+    ports:
+      - "4001:4001"
+      - "9001:9001"
 
 # Source db with volume and network
   db:

@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "billing";
+
+// BillingService — the service being exposed
+// CreateBillingAccount — the method that can be called remotely
+// BillingRequest / BillingResponse — the data contract (like DTOs in REST)
+
+//    patient-service  →  [gRPC call]  →  billing-service
+//    CreateBillingAccount(patientId, name, email)
+//    returns (accountId, status)
+
+// run maven-compile to generate proto files
+// What is proto file ? its something like DTO
+// Automatically generated code that allows a client application to interact with a remote server as if it were a local object
+
+service BillingService {
+//  rpc CreateBillingAccount(BillingRequest) returns (stream BillingResponse); // for stream response
+  rpc CreateBillingAccount(BillingRequest) returns (BillingResponse); // for single req-res like REST api calls
+}
+
+message BillingRequest{
+  string patientId = 1;
+  string name = 2;
+  string email = 3;
+}
+
+message BillingResponse{
+  string accountId = 1;
+  string status = 2;
+}
