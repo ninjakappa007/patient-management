@@ -20,6 +20,18 @@ services:
       - db
       - billing-service
       - analytics-service
+      - auth-service
+
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "4003:4003"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/auth-service-db
+      SPRING_DATASOURCE_USERNAME: nayaashb
+      SPRING_DATASOURCE_PASSWORD: Ashu@9348
+    networks:
+      - app-tier
 
   billing-service:
     build: ./billing-service
