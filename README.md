@@ -23,6 +23,7 @@ docker compose down          # stop containers
 docker build -t patient-service .  # rebuild image
 docker compose up            # start again
 docker compose up --build    # build and start together
+docker image prune -f        # delete untagged images
 ```
 
 ## Notification Service
@@ -31,4 +32,6 @@ docker compose up --build    # build and start together
 
 Self Notes :
 1. use ElasticMQ for replacement of SQS in local env using docker compose
-2. 
+2. implement api gateway with auth service and block access to downstream services 
+3. global access to proto files, for grpcs
+4. 

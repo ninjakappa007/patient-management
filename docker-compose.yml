@@ -30,6 +30,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/auth-service-db
       SPRING_DATASOURCE_USERNAME: nayaashb
       SPRING_DATASOURCE_PASSWORD: Ashu@9348
+      JWT_SECRET: "uittcREYpaV8yn1eWQlbiqHRMuVkZFlFZyiNKcbTh+I="
     networks:
       - app-tier
 
