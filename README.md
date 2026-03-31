@@ -25,6 +25,8 @@ docker compose up            # start again
 docker compose up --build    # build and start together
 docker image prune -f        # delete untagged images
 ```
+## Complete Architecture 
+![Example Image](/micro-service.png)
 
 ## Notification Service
 ![Example Image](/notification-service.png)
